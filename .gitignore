@@ -1,0 +1,38 @@
+# -----------------------
+# Python
+# -----------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pycache/
+*.env
+*.venv/
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# -----------------------
+# IDE / Editor
+# -----------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# -----------------------
+# OS files
+# -----------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------
+# Env / secrets
+# -----------------------
+.env
+.env.*          # ví dụ .env.dev, .env.local
+*.key
+*.pem
+*.crt

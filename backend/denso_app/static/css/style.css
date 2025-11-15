@@ -1,0 +1,751 @@
+/* ============================================
+   DENSO FORECAST SUITE V4 - CUSTOM STYLES
+   ============================================ */
+
+/* ========== ROOT VARIABLES ========== */
+:root {
+    --sidebar-width: 280px;
+    --topbar-height: 60px;
+    --primary-color: #c0152f; /* DENSO RED */
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --bg-body: #f8f9fa;
+    --bg-card: #ffffff;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --border-color: #dee2e6;
+    --shadow-sm: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+    --shadow-md: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    --shadow-lg: 0 1rem 3rem rgba(0,0,0,0.175);
+}
+
+[data-theme="dark"] {
+    --bg-body: #1a1d20;
+    --bg-card: #2b2f33;
+    --text-dark: #f8f9fa;
+    --text-muted: #adb5bd;
+    --border-color: #495057;
+}
+
+/* Override Bootstrap primary để chuyển toàn bộ xanh → đỏ DENSO */
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.border-primary {
+    border-color: var(--primary-color) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #950f25 !important;
+    border-color: #950f25 !important;
+}
+
+.btn-outline-primary {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
+/* ========== GLOBAL STYLES ========== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-body);
+    color: var(--text-dark);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ========== TOPBAR ========== */
+.topbar {
+    height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.search-box {
+    position: relative;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-body);
+    border-radius: 20px;
+    padding: 4px 16px;
+    min-width: 250px;
+}
+
+.search-box i {
+    color: var(--text-muted);
+}
+
+.search-box input {
+    background: transparent !important;
+    outline: none;
+    box-shadow: none !important;
+}
+
+/* Notification Panel */
+.notif-panel {
+    position: absolute;
+    right: 0;
+    top: 120%;
+    display: none;
+    min-width: 350px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 2000;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== APP WRAPPER ========== */
+.app-wrap {
+    display: flex;
+    min-height: calc(100vh - var(--topbar-height));
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+    width: var(--sidebar-width);
+    position: sticky;
+    top: var(--topbar-height);
+    height: calc(100vh - var(--topbar-height));
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--bg-card);
+    transition: all 0.3s ease;
+}
+
+/* Scrollbar custom */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Nav Group */
+.nav-group {
+    margin-bottom: 8px;
+}
+
+.nav-group-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.nav-group-header:hover {
+    background: var(--bg-body);
+}
+
+.nav-group-header i.fa-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+.nav-group-header.collapsed i.fa-chevron-down {
+    transform: rotate(-90deg);
+}
+
+.nav-group-content {
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.nav-group-content.collapsed {
+    max-height: 0;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px 10px 48px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+    background: var(--bg-body);
+}
+
+.nav-link.active {
+    color: var(--primary-color);
+    background: rgba(192, 21, 47, 0.1);
+    border-left-color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* ========== MAIN CONTENT ========== */
+.main {
+    flex: 1;
+    padding: 24px;
+    min-height: 100%;
+    background: var(--bg-body);
+}
+
+/* ========== CARD STYLES ========== */
+.card {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 600;
+}
+
+/* ========== KPI CARDS ========== */
+.kpi-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card .icon-bg {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    font-size: 80px;
+    opacity: 0.1;
+}
+
+.kpi-card .value {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    margin: 8px 0;
+}
+
+.kpi-card .label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.kpi-card .change {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* ========== GRID LAYOUTS ========== */
+.grid-2 {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* ========== ALERT STYLES ========== */
+.alert-item {
+    padding: 12px;
+    border-left: 4px solid;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+.alert-item:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-sm);
+}
+
+.alert-item.high {
+    border-left-color: var(--danger-color);
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.alert-item.med {
+    border-left-color: var(--warning-color);
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.alert-item.low {
+    border-left-color: var(--info-color);
+    background: rgba(13, 202, 240, 0.1);
+}
+
+/* ========== TABLE STYLES ========== */
+.table-modern {
+    background: var(--bg-card);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-modern thead {
+    background: var(--bg-body);
+}
+
+.table-modern th {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.table-modern td {
+    padding: 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table-modern tbody tr:hover {
+    background: var(--bg-body);
+}
+
+/* ========== CHART CONTAINER ========== */
+.chart-container {
+    position: relative;
+    min-height: 300px;
+    padding: 16px;
+}
+
+/* ========== FILTER CHIPS ========== */
+.filter-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--bg-body);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.filter-chip:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.filter-chip.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* ========== BADGES ========== */
+.badge-status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* ========== 3D MAP CONTAINER (NEW IN V4) ========== */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+
+#map3d {
+    width: 100%;
+    height: 100%;
+}
+
+/* ========== COLLAPSIBLE MAP CONTROLS ========== */
+/* Wrapper chứa tab + panel */
+.map-controls-wrapper {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: stretch;
+}
+
+/* Khi collapsed: chỉ còn tab nhỏ dính mép trái màn hình, panel bị đẩy ra ngoài */
+.map-controls-wrapper.collapsed {
+    transform: translateX(-20px);
+}
+
+/* Tab nhỏ luôn thấy để hover/click */
+.map-controls-tab {
+    width: 38px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    backdrop-filter: blur(4px);
+}
+
+.map-controls-tab i {
+    font-size: 18px;
+}
+
+/* Panel chính chứa các nút layer */
+.map-controls-panel {
+    min-width: 260px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: var(--shadow-lg);
+    margin-left: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.map-controls-wrapper.collapsed .map-controls-panel {
+    transform: translateX(-110%);
+    opacity: 1;
+    pointer-events: none;
+}
+
+/* Map mode buttons */
+.map-mode-btn {
+    width: 100%;
+    text-align: left;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-card);
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.map-mode-btn:hover {
+    background: var(--bg-body);
+    border-color: var(--primary-color);
+}
+
+.map-mode-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.map-mode-btn i {
+    width: 24px;
+    margin-right: 8px;
+}
+
+/* ========== MAP LEGEND ========== */
+.map-legend {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1000;
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow-lg);
+    min-width: 200px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+/* Map Popup */
+.mapboxgl-popup-content {
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow-lg);
+}
+
+.popup-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+}
+
+.popup-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+}
+
+/* Market Intelligence Stats Cards */
+.market-stat-card {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #7a0f23 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.market-stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.market-stat-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 8px 0;
+}
+
+.market-stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.market-stat-change {
+    font-size: 0.85rem;
+    margin-top: 8px;
+}
+
+/* SKU Selector for Market Intelligence */
+.sku-selector-market {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.sku-item-market {
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 4px;
+}
+
+.sku-item-market:hover {
+    background: var(--bg-body);
+}
+
+.sku-item-market.selected {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 992px) {
+    .sidebar {
+        position: fixed;
+        left: -300px;
+        z-index: 1040;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .search-box {
+        display: none !important;
+    }
+
+    .map-container {
+        height: 400px;
+    }
+
+    /* Trên mobile: cho panel luôn mở (không đẩy ra ngoài) */
+    .map-controls-wrapper {
+        top: 8px;
+        left: 8px;
+        transform: translateX(0);
+    }
+
+    .map-controls-panel {
+        min-width: 230px;
+    }
+
+    .map-controls-wrapper.collapsed .map-controls-panel {
+        transform: none;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .map-legend {
+        bottom: 8px;
+        right: 8px;
+        left: auto;
+    }
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+/* ========== SKELETON LOADING ========== */
+.skeleton {
+    background: linear-gradient(90deg, var(--bg-body) 25%, var(--border-color) 50%, var(--bg-body) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+    border-radius: 8px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ========== TOOLTIP ========== */
+.tooltip-help {
+    cursor: help;
+    border-bottom: 1px dotted var(--text-muted);
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* ========== PRINT STYLES ========== */
+@media print {
+    .topbar, .sidebar {
+        display: none;
+    }
+
+    .main {
+        padding: 0;
+    }
+}
